@@ -1,0 +1,52 @@
+#!/bin/bash
+# Author Rija Rizki, 8 Mar 2023
+doms=$(cat $1)
+warn_day=30
+date_now=$(date +%F)
+spr="+----------------------+-------------+-----------+-------------+"
+printf "+--------------------------------------------------------------+\n"
+printf "| %-60s |\n" "Domain Expiry Checker"
+printf "| %-60s |\n" "Threshold : $warn_day days"
+printf "$spr\n"
+printf "| %-30s | %-20s | %-5s | %-21s |\n" "$(tput bold)Domain$(tput sgr0)" "$(tput bold)Expiry Date$(tput sgr0)" "$(tput bold)Days Left$(tput sgr0)" "$(tput bold)Status$(tput sgr0)"
+printf "$spr\n"
+for dom in $doms
+do
+	date_exp=$(whois $dom -I | grep Expir | cut -d ':' -f2 | cut -d 'T' -f1 | awk '{print $1}')
+	if [[ -n $date_exp ]]
+	then
+		count_day=$(echo $((($(date -d $date_exp +%s) - $(date -d $date_now +%s)) / 86400)))
+		if [[ $count_day -le $warn_day ]] && [[ $count_day -gt 15 ]]
+		then
+			days=$(echo $(tput setaf 3)$count_day days$(tput sgr0))
+			status=$(echo $(tput setaf 3)Update$(tput sgr0))
+		elif [[ $count_day -le 15 ]] && [[ $count_day -gt 1 ]]
+		then
+			days=$(echo $(tput setaf 1)$count_day days$(tput sgr0))
+			status=$(echo $(tput setaf 1)Update ASAP$(tput sgr0))
+		elif [[ $count_day -le 1 ]] && [[ $count_day -gt 0 ]]
+		then
+			days=$(echo $(tput setaf 1)$count_day day $(tput sgr0))
+			status=$(echo $(tput setaf 1)Update ASAP$(tput sgr0))
+		elif [[ $count_day -le 0 ]]
+		then
+			if [[ $count_day == 0 ]] || [[ $count_day == -1 ]]
+			then
+				days=$(echo $(tput setaf 1)$count_day day $(tput sgr0))
+				status=$(echo $(tput setaf 1)Expired$(tput sgr0))
+			else
+				days=$(echo $(tput setaf 1)$count_day days$(tput sgr0))
+				status=$(echo $(tput setaf 1)Expired$(tput sgr0))
+			fi
+		else
+			days=$(echo $(tput setaf 2)$count_day days$(tput sgr0))
+			status=$(echo $(tput setaf 2)OK$(tput sgr0))
+		fi
+	else
+		date_exp="0000-00-00"
+		days=$(echo $(tput setaf 1)"    -    "$(tput sgr0))
+		status=$(echo $(tput setaf 1)Not exist$(tput sgr0))		
+	fi
+	printf "| %-30s | %-11s | %20s | %-22s |\n" "$(tput bold)$dom$(tput sgr0)" "$date_exp" "$days" "$status"
+done
+printf "$spr\n"
