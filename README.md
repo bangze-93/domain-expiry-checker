@@ -1,2 +1,3 @@
-chmod +x domain-expiry-checker
-./domain-expiry-checker domain-list
+$ chmod +x domain-expiry-checker
+
+$ ./domain-expiry-checker domain-list
