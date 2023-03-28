@@ -1,4 +1,4 @@
-#Domain Expiry Checker
+# Domain Expiry Checker
 
 ```bash
 chmod +x domain-expiry-checker
