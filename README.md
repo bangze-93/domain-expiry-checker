@@ -1,3 +1,6 @@
-$ chmod +x domain-expiry-checker
+#Domain Expiry Checker
 
-$ ./domain-expiry-checker domain-list
+```bash
+chmod +x domain-expiry-checker
+./domain-expiry-checker domain-list
+```
