@@ -1,6 +1,6 @@
 #!/bin/bash
 # Author Rija Rizki, 8 Mar 2023
-doms=$(cat $1)
+doms=$(cat $1 | grep -Ev "#")
 warn_day=30
 date_now=$(date +%F)
 spr="+----------------------+-------------+-----------+-------------+"
