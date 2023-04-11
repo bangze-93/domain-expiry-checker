@@ -1,6 +1,5 @@
 #!/bin/bash
 # Author Rija Rizki, 8 Mar 2023
-doms=$(cat $1 | grep -Ev "#")
 warn_day=30
 date_now=$(date +%F)
 spr="+----------------------+-------------+-----------+-------------+"
@@ -10,6 +9,7 @@ printf "| %-60s |\n" "Threshold : $warn_day days"
 printf "$spr\n"
 printf "| %-30s | %-20s | %-5s | %-21s |\n" "$(tput bold)Domain$(tput sgr0)" "$(tput bold)Expiry Date$(tput sgr0)" "$(tput bold)Days Left$(tput sgr0)" "$(tput bold)Status$(tput sgr0)"
 printf "$spr\n"
+doms=$(cat $1 | grep -Ev "#")
 for dom in $doms
 do
 	date_exp=$(whois $dom -I | grep Expir | cut -d ':' -f2 | cut -d 'T' -f1 | awk '{print $1}')
