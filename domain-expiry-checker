@@ -4,8 +4,9 @@ warn_day=30
 date_now=$(date +%F)
 spr="+----------------------+-------------+-----------+-------------+"
 printf "+--------------------------------------------------------------+\n"
-printf "| %-60s |\n" "Domain Expiry Checker"
-printf "| %-60s |\n" "Threshold : $warn_day days"
+printf "| %-70s |\n" "$(tput bold)Domain Expiry Checker$(tput sgr0)"
+printf "| %-70s |\n" "$(tput bold)Threshold: $warn_day days$(tput sgr0)"
+printf "| %-70s |\n" "$(tput bold)Author: Rija Rizki$(tput sgr0)"
 printf "$spr\n"
 printf "| %-30s | %-20s | %-5s | %-21s |\n" "$(tput bold)Domain$(tput sgr0)" "$(tput bold)Expiry Date$(tput sgr0)" "$(tput bold)Days Left$(tput sgr0)" "$(tput bold)Status$(tput sgr0)"
 printf "$spr\n"
@@ -19,24 +20,24 @@ do
 		if [[ $count_day -le $warn_day ]] && [[ $count_day -gt 15 ]]
 		then
 			days=$(echo $(tput setaf 3)$count_day days$(tput sgr0))
-			status=$(echo $(tput setaf 3)Update$(tput sgr0))
+			status=$(echo $(tput setaf 3)Update it!$(tput sgr0))
 		elif [[ $count_day -le 15 ]] && [[ $count_day -gt 1 ]]
 		then
 			days=$(echo $(tput setaf 1)$count_day days$(tput sgr0))
-			status=$(echo $(tput setaf 1)Update ASAP$(tput sgr0))
+			status=$(echo $(tput setaf 1)Update it!!$(tput sgr0))
 		elif [[ $count_day -le 1 ]] && [[ $count_day -gt 0 ]]
 		then
 			days=$(echo $(tput setaf 1)$count_day day $(tput sgr0))
-			status=$(echo $(tput setaf 1)Update ASAP$(tput sgr0))
+			status=$(echo $(tput setaf 1)Update it!!$(tput sgr0))
 		elif [[ $count_day -le 0 ]]
 		then
 			if [[ $count_day == 0 ]] || [[ $count_day == -1 ]]
 			then
 				days=$(echo $(tput setaf 1)$count_day day $(tput sgr0))
-				status=$(echo $(tput setaf 1)Expired$(tput sgr0))
+				status=$(echo $(tput setaf 1)Expired!!!$(tput sgr0))
 			else
 				days=$(echo $(tput setaf 1)$count_day days$(tput sgr0))
-				status=$(echo $(tput setaf 1)Expired$(tput sgr0))
+				status=$(echo $(tput setaf 1)Expired!!!$(tput sgr0))
 			fi
 		else
 			days=$(echo $(tput setaf 2)$count_day days$(tput sgr0))
